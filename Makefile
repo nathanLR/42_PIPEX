@@ -6,7 +6,7 @@
 #    By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/16 14:52:51 by nle-roux          #+#    #+#              #
-#    Updated: 2024/01/16 15:04:09 by nle-roux         ###   ########.fr        #
+#    Updated: 2024/01/16 15:10:24 by nle-roux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,28 +17,28 @@ NAME		= pipex
 MANDATORY	= main.c utils.c pipex.c
 BONUS		= main.c utils.c pipex.c
 
-SRCS_M		= $(addprefix mandatory, $(MANDATORY))
-SRCS_B		= $(addprefix bonus, $(BONUS))
+SRCS_M		= $(addprefix mandatory/, $(MANDATORY))
+SRCS_B		= $(addprefix bonus/, $(BONUS))
 
 OBJS_M		= $(SRCS_M:.c=.o)
 OBJS_B		= $(SRCS_B:.c=.o)
 
 # -- rules -- #
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -Ilibft -Imandatary -c $< -o $@
 
 $(NAME): $(OBJS_M)
 	make -C libft
-	$(CC) $(CFLAGS) -I./libft -I./mandatory/pipex.h $(OBJS_M) -L./libft -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS_M) -L./libft -lft -o $(NAME)
 
 all: $(NAME)
 
 clean:
-	make -C clean libft
+	make -C libft clean
 	rm -f $(OBJS_M) $(OBJS_B)
 
 fclean:
-	make -C fclean libft
+	make -C libft fclean
 	rm -f $(OBJS_M) $(OBJS_B) $(NAME)
 
 re: fclean all
