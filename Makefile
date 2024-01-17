@@ -6,16 +6,16 @@
 #    By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/16 14:52:51 by nle-roux          #+#    #+#              #
-#    Updated: 2024/01/16 15:10:24 by nle-roux         ###   ########.fr        #
+#    Updated: 2024/01/17 18:42:55 by nle-roux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= clang
-CFLAGS		= -Wall -Werror -Wextra -g
+CFLAGS		= -Wall -Werror -Wextra -g -gdwarf-4
 NAME		= pipex
 
-MANDATORY	= main.c utils.c pipex.c
-BONUS		= main.c utils.c pipex.c
+MANDATORY	= main.c utils.c ft_pipex.c ft_execve.c
+BONUS		= main.c utils.c ft_pipex.c ft_execve.c
 
 SRCS_M		= $(addprefix mandatory/, $(MANDATORY))
 SRCS_B		= $(addprefix bonus/, $(BONUS))
@@ -25,7 +25,7 @@ OBJS_B		= $(SRCS_B:.c=.o)
 
 # -- rules -- #
 %.o: %.c
-	$(CC) $(CFLAGS) -Ilibft -Imandatary -c $< -o $@
+	$(CC) $(CFLAGS) -Ilibft -Imandatory -c $< -o $@
 
 $(NAME): $(OBJS_M)
 	make -C libft
