@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.c                                         :+:      :+:    :+:   */
+/*   ft_pipex_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 22:27:03 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/18 10:51:48 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/18 22:58:04 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pipex.h>
+#include <pipex_bonus.h>
 #include <libft.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
-
+/*
 static void	ft_process_child(int fds[2], t_data *data, char **env)
 {
 	int	input_file_fd;
@@ -33,6 +33,7 @@ static void	ft_process_child(int fds[2], t_data *data, char **env)
 	close(fds[PIPE_OUT]);
 	ft_execve(data->cmd1, data, env);
 	exit(EXIT_SUCCESS);
+
 }
 
 static void	ft_process_parent(int fds[2], t_data *data, char **env)
@@ -52,10 +53,14 @@ static void	ft_process_parent(int fds[2], t_data *data, char **env)
 	close(output_file_fd);
 	wait(NULL);
 	ft_execve(data->cmd2, data, env);
-}
 
+}
+*/
 void	ft_pipex(t_data *data, char **env)
 {
+(void)data;
+(void)env;
+/*
 	int	fds[2];
 	int	pid;
 
@@ -69,4 +74,5 @@ void	ft_pipex(t_data *data, char **env)
 	else
 		ft_process_parent(fds, data, env);
 	ft_destroy_data(data);
+*/
 }
