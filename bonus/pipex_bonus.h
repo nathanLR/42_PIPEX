@@ -6,7 +6,7 @@
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 22:11:26 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/18 23:14:32 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/19 16:38:27 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 # define U_ERROR 2
 # define P_ERROR 1
 # define PID_CHILD 0
-# define PIPE_OUT 1
-# define PIPE_IN 0
+# define PIPE_ENTRY 1
+# define PIPE_EXIT 0
 # define SPACE ' '
 # define E_PARAMS "Usage: ./pipex infile cmd1 ... cmd_n outfile"
 # define E_HERE_DOC "Usage: ./pipex here_doc DELIMITER cmd1 cmd2 outfile"
