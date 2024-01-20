@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.c                                         :+:      :+:    :+:   */
+/*   ft_pipex_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 22:27:03 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/20 17:29:17 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:41:34 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pipex.h>
+#include <pipex_bonus.h>
 #include <libft.h>
 #include <unistd.h>
 #include <fcntl.h>
