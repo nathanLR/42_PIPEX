@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execve_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 18:41:09 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/18 23:00:12 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:25:06 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pipex_bonus.h>
+#include <pipex.h>
 #include <libft.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-/*
+
 static char	*ft_get_path_env(char **env)
 {
 	while (*env != NULL)
@@ -66,13 +66,10 @@ static char	*ft_get_cmd_path(char *cmd, char **env)
 	ft_free_tab((void **)paths);
 	return (NULL);
 }
-*/
+
 void	ft_execve(char **cmd, t_data *data, char **env)
 {
-(void)cmd;
-(void)data;
-(void)env;
-/*	char	*path;
+	char	*path;
 
 	if (ft_strchr(cmd[0], '/') != NULL)
 	{
@@ -93,5 +90,4 @@ void	ft_execve(char **cmd, t_data *data, char **env)
 		}
 		free(path);
 	}
-*/
 }

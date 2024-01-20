@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:08:39 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/18 23:09:01 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:24:58 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
-#include <pipex_bonus.h>
+#include <pipex.h>
 #include <stdlib.h>
 
-static void	ft_fill_data_cmds(char **argv, t_data *data)
+/*static void	ft_fill_data_cmds(char **argv, t_data *data)
 {
 	size_t	i;
 	size_t	length;
@@ -60,18 +60,23 @@ static t_data	*ft_init_pipex(int argc, char **argv, t_data *data)
 	data->hd_delimiter = NULL;
 	return (data);
 }
-
-static t_data	*ft_init_data(int argc, char **argv, unsigned int program_type)
+*/
+static t_data	*ft_init_data(int argc, char **argv)
 {
 	t_data	*data;
 
 	data = (t_data *)malloc(sizeof(t_data) * 1);
 	if (data == NULL)
 		ft_manage_error(NULL, P_ERROR, NULL, EXIT_FAILURE);
-	if (program_type == HEREDOC)
-		data = ft_init_here_doc(argv, data);
-	else if (program_type == PIPEX)
-		data = ft_init_pipex(argc, argv, data);
+	data->infile = ft_strdup(argv[0]);
+	if (data->infile == NULL)
+		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+	data->cmd1 = ft_split(argv[1], SPACE);
+	if (data->cmd1 == NULL)
+		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+	data->cmd2 = ft_split(argv[2], SPACE);
+	if (data->cmd2 == NULL)
+		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
 	data->outfile = ft_strdup(argv[argc - 1]);
 	if (data->outfile == NULL)
 		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
@@ -84,19 +89,9 @@ int	main(int argc, char **argv, char **env)
 
 	argv++;
 	argc--;
-	if (argv[0] != NULL && ft_strcmp(argv[0], "here_doc") == 0)
-	{
-		if (argc < 5)
-			ft_manage_error(ft_strdup(E_HERE_DOC), U_ERROR, NULL, EXIT_FAILURE);
-		data = ft_init_data(argc, argv, HEREDOC);
-		ft_here_doc(data, env);
-	}
-	else
-	{
-		if (argc < 4)
-			ft_manage_error(ft_strdup(E_PARAMS), U_ERROR, NULL, EXIT_FAILURE);
-		data = ft_init_data(argc, argv, PIPEX);
-		ft_pipex(data, env);
-	}
+	if (argc != 4)
+		ft_manage_error(ft_strdup(E_PARAMS), U_ERROR, NULL, EXIT_FAILURE);
+	data = ft_init_data(argc, argv);
+	ft_pipex(data, env);
 	return (0);
 }
