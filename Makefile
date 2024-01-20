@@ -6,7 +6,7 @@
 #    By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/16 14:52:51 by nle-roux          #+#    #+#              #
-#    Updated: 2024/01/18 22:51:30 by nle-roux         ###   ########.fr        #
+#    Updated: 2024/01/20 21:48:29 by nle-roux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME		= pipex
 BONUS_CALL	= 0
 
 MANDATORY	= main utils ft_pipex ft_execve
-BONUS		= $(addsuffix _bonus, $(MANDATORY) ft_heredoc)
+BONUS		= $(addsuffix _bonus, $(MANDATORY))
 
 SRCS_M		= $(addsuffix .c, $(addprefix mandatory/, $(MANDATORY)))
 SRCS_B		= $(addsuffix .c, $(addprefix bonus/, $(BONUS)))

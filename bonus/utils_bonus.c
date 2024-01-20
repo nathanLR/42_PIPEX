@@ -6,7 +6,7 @@
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 22:13:52 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/20 17:42:27 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/20 21:45:22 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,23 @@
 
 void	ft_destroy_data(t_data *data)
 {
+	size_t	i;
+
+	i = 0;
 	if (data == NULL)
 		return ;
 	if (data->infile != NULL)
 		free(data->infile);
 	if (data->outfile != NULL)
 		free(data->outfile);
-	if (data->cmd1 != NULL)
-		ft_free_tab((void **)data->cmd1);
-	if (data->cmd2 != NULL)
-		ft_free_tab((void **)data->cmd2);
+	if (data->delimiter != NULL)
+		free(data->delimiter);
+	if (data->cmds != NULL)
+	{
+		while (i < ft_tablen((char **)data->cmds))
+			ft_free_tab((void **)data->cmds[i++]);
+		free(data->cmds);
+	}
 	free(data);
 }
 

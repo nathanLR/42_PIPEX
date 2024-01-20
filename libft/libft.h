@@ -6,7 +6,7 @@
 /*   By: nle-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:01:07 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/13 18:34:55 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/20 22:04:14 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -492,7 +492,8 @@ t_list	*ft_lstlast(t_list *lst);
 
 /**
 *	==================== LINKED LIST ====================
-*	This function retrieve the address of the element before the last in the list.
+*	This function retrieve the address of the element before the last
+*	in the list.
 *
 *	@param		t_list *lst		The first element of the list.
 *	@return		t_list *lst		The last element of the list.
@@ -512,8 +513,9 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 *	==================== LINKED LIST ====================
 *	This function delete one element of the list, without freeing the next one.
 *
-*	@param		t_list *lst		The node to delete
-*	@param		void (*del)(void *)	The pointer to function used to delete the content.
+*	@param		t_list *lst			The node to delete
+*	@param		void (*del)(void *)	The pointer to function used to
+*									delete the content.
 */
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
 
@@ -521,8 +523,10 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 *	==================== LINKED LIST ====================
 *	This function clears the entire list pointed to by lst.
 *
-*	@param		t_list **lst	The address of the first element of the list.
-*	@param		void (*del)(void *)	The pointer to function used to delete the content.
+*	@param		t_list **lst		The address of the first element
+*									of the list.
+*	@param		void (*del)(void *)	The pointer to function used to delete
+*									the content.
 */
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 
@@ -540,13 +544,15 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 /**
 *	==================== LINKED LIST ====================
 *	This function iterate over the list pointed to by lst, and returns a mapped
-*	version of it, calling f on the list content for each node it passes throught.
+*	version of it, calling f on the list content for each node 
+*	it passes throught.
 *
-*	@param		t_list *lst		The first element of the list we want to map.
-*	@param		void *(*f)(void *)	The pointer to function used on a node content.
+*	@param		t_list *lst			The first element of the list we want to map.
+*	@param		void *(*f)(void *)	The pointer to function used on a
+*									node content.
 *	@param		void (*del)(void *)	The pointer to function used to delete
-*								the mapped list if something went wrong.
-*	@return		t_list *		The new list.
+*									the mapped list if something went wrong.
+*	@return		t_list *			The new list.
 */
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
@@ -565,7 +571,8 @@ int		ft_printf(const char *format, ...);
 *	if it's the first call to this function)
 *
 *	@param		int fd			The file descriptor to retrieve the line from.
-*	@return		char *			The line it read or NULL if there was nothing to read.
+*	@return		char *			The line it read or NULL if there was
+*								nothing to read.
 */
 char	*get_next_line(int fd);
 
@@ -577,7 +584,8 @@ char	*get_next_line(int fd);
 *	without creating a conflict between them.
 *
 *	@param		int fd			The file descriptor to retrieve the line from.
-*	@return		char *			The line it read or NULL if there was nothing to read.
+*	@return		char *			The line it read or NULL if there
+*								was nothing to read.
 */
 char	*get_next_line_multiple(int fd);
 
