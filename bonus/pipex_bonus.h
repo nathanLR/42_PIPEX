@@ -6,7 +6,7 @@
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 22:11:26 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/20 21:55:24 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/21 15:17:32 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define E_PERM "zsh: permission denied: "
 # define C_PERM 126
 # define C_CMD_NOT_FOUND 127
+# define TMP_FILE "infile_tmp"
 
 typedef unsigned int	t_bool;
 typedef struct s_data

@@ -6,7 +6,7 @@
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 22:27:03 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/20 21:53:56 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:40:47 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,48 +16,20 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-static void	ft_process_child(int fds[2], t_data *data, char **env)
+static void	ft_process_child(int fds[2], char **cmd, t_data *data, char **env)
 {
-	int	input_file_fd;
-
-	input_file_fd = open(data->infile, O_RDONLY);
-	if (input_file_fd == -1)
-		ft_manage_error(ft_strjoin(E_NOT_EXISTS, data->infile),
-			U_ERROR, data, EXIT_FAILURE);
-	if (dup2(input_file_fd, STDIN_FILENO) == -1)
-		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+	close(fds[PIPE_EXIT]);
 	if (dup2(fds[PIPE_ENTRY], STDOUT_FILENO) == -1)
 		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
-	close(fds[PIPE_EXIT]);
-	close(input_file_fd);
 	close(fds[PIPE_ENTRY]);
-	ft_execve(data->cmd1, data, env);
+	ft_execve(cmd, data, env);
 	exit(EXIT_SUCCESS);
 }
 
-static void	ft_process_parent(int fds[2], t_data *data, char **env)
+static void	ft_process_cmd(char **cmd, t_data *data, char **env)
 {
-	int	output_file_fd;
-
-	output_file_fd = open(data->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (output_file_fd == -1)
-		ft_manage_error(ft_strjoin(E_PERM, data->outfile),
-			U_ERROR, data, EXIT_FAILURE);
-	if (dup2(output_file_fd, STDOUT_FILENO) == -1)
-		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
-	if (dup2(fds[PIPE_EXIT], STDIN_FILENO) == -1)
-		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
-	close(fds[PIPE_EXIT]);
-	close(fds[PIPE_ENTRY]);
-	close(output_file_fd);
-	wait(NULL);
-	ft_execve(data->cmd2, data, env);
-}
-
-void	ft_pipex(t_data *data, char **env)
-{
-	int	fds[2];
-	int	pid;
+	int		fds[2];
+	pid_t	pid;
 
 	if (pipe(fds) == -1)
 		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
@@ -65,8 +37,79 @@ void	ft_pipex(t_data *data, char **env)
 	if (pid == -1)
 		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
 	if (pid == PID_CHILD)
-		ft_process_child(fds, data, env);
+		ft_process_child(fds, cmd, data, env);
 	else
-		ft_process_parent(fds, data, env);
-	ft_destroy_data(data);
+	{
+		wait(NULL);
+		close(fds[PIPE_ENTRY]);
+		if (dup2(fds[PIPE_EXIT], STDIN_FILENO) == -1)
+			ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+		close(fds[PIPE_EXIT]);
+	}
+}
+
+static void	ft_gnl_heredoc(int fds[2], char *delimiter)
+{
+	char	*gnl;
+
+	close(fds[PIPE_EXIT]);
+	while (1)
+	{
+		ft_printf("pipex heredoc> ");
+		gnl = get_next_line(STDIN_FILENO);
+		if (ft_strncmp(gnl, delimiter, ft_strlen(delimiter)) == 0)
+		{
+			free(gnl);
+			break ;
+		}
+		ft_putstr_fd(gnl, fds[PIPE_ENTRY]);
+		free(gnl);
+	}
+	exit(EXIT_SUCCESS);
+}
+
+static void	ft_is_heredoc(t_data *data)
+{
+	int		fds[2];
+	pid_t	pid;
+
+	if (pipe(fds) == -1)
+		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+	pid = fork();
+	if (pid == -1)
+		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+	if (pid == PID_CHILD)
+		ft_gnl_heredoc(fds, data->delimiter);
+	else
+	{
+		wait(NULL);
+		close(fds[PIPE_ENTRY]);
+		if (dup2(fds[PIPE_EXIT], STDIN_FILENO) == -1)
+			ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+	}
+}
+
+void	ft_pipex(t_data *data, char **env)
+{
+	int		input_file_fd;
+	int		output_file_fd;
+	size_t	i;
+
+	i = 0;
+	if (data->is_heredoc)
+		ft_is_heredoc(data);
+	else
+	{
+		input_file_fd = open(data->infile, O_RDONLY);
+		if (input_file_fd == -1)
+			ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+		dup2(input_file_fd, STDIN_FILENO);
+	}
+	output_file_fd = open(data->outfile, O_WRONLY | O_CREAT | O_APPEND, 0664);
+	if (output_file_fd == -1)
+		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+	while (i < ft_tablen((char **)data->cmds) - 1)
+		ft_process_cmd(data->cmds[i++], data, env);
+	dup2(output_file_fd, STDOUT_FILENO);
+	ft_execve(data->cmds[i], data, env);
 }
