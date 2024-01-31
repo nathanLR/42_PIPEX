@@ -6,14 +6,13 @@
 #    By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/16 14:52:51 by nle-roux          #+#    #+#              #
-#    Updated: 2024/01/20 21:48:29 by nle-roux         ###   ########.fr        #
+#    Updated: 2024/01/31 08:30:44 by nle-roux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= clang
 CFLAGS		= -Wall -Werror -Wextra -g -gdwarf-4
 NAME		= pipex
-BONUS_CALL	= 0
 
 MANDATORY	= main utils ft_pipex ft_execve
 BONUS		= $(addsuffix _bonus, $(MANDATORY))

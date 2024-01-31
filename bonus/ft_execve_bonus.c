@@ -6,13 +6,12 @@
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 18:41:09 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/20 21:53:47 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/31 08:35:22 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex_bonus.h>
 #include <libft.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 
