@@ -6,7 +6,7 @@
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:08:39 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/20 21:53:30 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/26 09:13:41 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static t_data	*ft_init_heredoc(int argc, char **argv, t_data *data)
 		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
 	ft_fill_data_cmds(argv, data, 2);
 	data->infile = NULL;
+	data->open_mode = O_WRONLY | O_CREAT | O_APPEND;
 	return (data);
 }
 
@@ -53,6 +54,7 @@ static t_data	*ft_init_pipex(int argc, char **argv, t_data *data)
 		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
 	ft_fill_data_cmds(argv, data, 1);
 	data->delimiter = NULL;
+	data->open_mode = O_WRONLY | O_CREAT | O_TRUNC;
 	return (data);
 }
 

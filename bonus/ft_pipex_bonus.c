@@ -6,7 +6,7 @@
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 22:27:03 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/22 12:40:47 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/27 11:56:18 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	ft_process_cmd(char **cmd, t_data *data, char **env)
 	}
 }
 
-static void	ft_gnl_heredoc(int fds[2], char *delimiter)
+static void	ft_gnl_heredoc(int fds[2], char *delimiter, t_data *data)
 {
 	char	*gnl;
 
@@ -65,6 +65,8 @@ static void	ft_gnl_heredoc(int fds[2], char *delimiter)
 		ft_putstr_fd(gnl, fds[PIPE_ENTRY]);
 		free(gnl);
 	}
+	close(fds[PIPE_ENTRY]);
+	ft_destroy_data(data);
 	exit(EXIT_SUCCESS);
 }
 
@@ -79,13 +81,14 @@ static void	ft_is_heredoc(t_data *data)
 	if (pid == -1)
 		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
 	if (pid == PID_CHILD)
-		ft_gnl_heredoc(fds, data->delimiter);
+		ft_gnl_heredoc(fds, data->delimiter, data);
 	else
 	{
 		wait(NULL);
 		close(fds[PIPE_ENTRY]);
 		if (dup2(fds[PIPE_EXIT], STDIN_FILENO) == -1)
 			ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
+		close(fds[PIPE_EXIT]);
 	}
 }
 
@@ -104,12 +107,14 @@ void	ft_pipex(t_data *data, char **env)
 		if (input_file_fd == -1)
 			ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
 		dup2(input_file_fd, STDIN_FILENO);
+		close(input_file_fd);
 	}
-	output_file_fd = open(data->outfile, O_WRONLY | O_CREAT | O_APPEND, 0664);
-	if (output_file_fd == -1)
-		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
 	while (i < ft_tablen((char **)data->cmds) - 1)
 		ft_process_cmd(data->cmds[i++], data, env);
+	output_file_fd = open(data->outfile, data->open_mode, 0664);
+	if (output_file_fd == -1)
+		ft_manage_error(NULL, P_ERROR, data, EXIT_FAILURE);
 	dup2(output_file_fd, STDOUT_FILENO);
+	close(output_file_fd);
 	ft_execve(data->cmds[i], data, env);
 }

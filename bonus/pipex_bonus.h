@@ -6,7 +6,7 @@
 /*   By: nle-roux <nle-roux@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 22:11:26 by nle-roux          #+#    #+#             */
-/*   Updated: 2024/01/21 15:17:32 by nle-roux         ###   ########.fr       */
+/*   Updated: 2024/01/26 09:11:25 by nle-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define C_PERM 126
 # define C_CMD_NOT_FOUND 127
 # define TMP_FILE "infile_tmp"
+# include <fcntl.h>
 
 typedef unsigned int	t_bool;
 typedef struct s_data
@@ -35,6 +36,7 @@ typedef struct s_data
 	char	***cmds;
 	t_bool	is_heredoc;
 	char	*delimiter;
+	mode_t	open_mode;
 }	t_data;
 void	ft_manage_error(char *e_m, unsigned int e_t, t_data *data, int e_code);
 void	ft_pipex(t_data *data, char **env);
